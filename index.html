@@ -15,16 +15,24 @@
     }
     li {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
       padding: 10px;
       background: #f8f9fa;
       border: 1px solid #ddd;
       margin-bottom: 5px;
       border-radius: 5px;
     }
-    span {
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .note-title {
       font-weight: bold;
+      font-size: 1.2em;
+    }
+    .note-content {
+      margin-top: 10px;
     }
 
     /* Анимация появления */
@@ -67,8 +75,9 @@
 
     <!-- Форма добавления заметки -->
     <form id="noteForm" class="mb-3">
-      <textarea id="noteContent" class="form-control mb-2" placeholder="Введите заметку"></textarea>
-      <select id="categorySelect" class="form-select mb-2">
+      <input id="noteTitle" class="form-control mb-2" placeholder="Введите заголовок" title="Введите заголовок вашей заметки">
+      <textarea id="noteContent" class="form-control mb-2" placeholder="Введите текст заметки" title="Введите текст вашей заметки здесь"></textarea>
+      <select id="categorySelect" class="form-select mb-2" title="Выберите категорию для вашей заметки">
         <option value="Общие">Общие</option>
         <option value="Работа">Работа</option>
         <option value="Личное">Личное</option>
@@ -79,6 +88,12 @@
 
     <!-- Поиск -->
     <input id="searchInput" type="text" class="form-control mb-3" placeholder="Поиск по заметкам">
+    
+    <!-- Сортировка заметок -->
+    <select id="sortNotes" class="form-select mb-3">
+      <option value="date">По дате</option>
+      <option value="alphabet">По алфавиту</option>
+    </select>
 
     <!-- Список заметок -->
     <ul id="notesList" class="list-unstyled"></ul>

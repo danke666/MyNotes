@@ -13,6 +13,7 @@ function loadNotes() {
 // Функция для сохранения заметок в localStorage
 function saveNotes() {
   const notes = Array.from(notesList.children).map(item => ({
+    title: item.querySelector('.title').textContent,
     content: item.querySelector('.content').textContent,
     category: item.querySelector('.category').textContent,
     timestamp: item.querySelector('.timestamp').textContent,
@@ -21,14 +22,19 @@ function saveNotes() {
 }
 
 // Функция для добавления заметки в список
-function addNoteToList({ content, category, timestamp }) {
+function addNoteToList({ title, content, category, timestamp }) {
   const noteItem = document.createElement('li');
   noteItem.classList.add('fade-in'); // Добавляем класс анимации появления
+
+  // Заголовок заметки
+  const noteTitle = document.createElement('span');
+  noteTitle.textContent = title;
+  noteTitle.classList.add('title', 'note-title');
 
   // Текст заметки
   const noteContent = document.createElement('span');
   noteContent.textContent = content;
-  noteContent.classList.add('content');
+  noteContent.classList.add('content', 'note-content');
 
   // Категория заметки
   const noteCategory = document.createElement('span');
@@ -44,9 +50,12 @@ function addNoteToList({ content, category, timestamp }) {
   const editButton = document.createElement('button');
   editButton.textContent = '✏️';
   editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'ms-2');
+  editButton.style.fontSize = '0.8em'; // Уменьшаем размер текста кнопки
   editButton.addEventListener('click', () => {
+    const newTitle = prompt('Измените заголовок заметки:', title);
     const newContent = prompt('Измените текст заметки:', content);
-    if (newContent) {
+    if (newTitle && newContent) {
+      noteTitle.textContent = newTitle;
       noteContent.textContent = newContent;
       saveNotes();
     }
@@ -56,6 +65,7 @@ function addNoteToList({ content, category, timestamp }) {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = '❌';
   deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
+  deleteButton.style.fontSize = '0.8em'; // Уменьшаем размер текста кнопки
   deleteButton.addEventListener('click', () => {
     // Анимация исчезания перед удалением
     noteItem.classList.add('fade-out');
@@ -66,7 +76,7 @@ function addNoteToList({ content, category, timestamp }) {
   });
 
   // Сборка заметки
-  noteItem.append(noteContent, noteCategory, noteTimestamp, editButton, deleteButton);
+  noteItem.append(noteTitle, noteContent, noteCategory, noteTimestamp, editButton, deleteButton);
   notesList.appendChild(noteItem);
 }
 
@@ -75,18 +85,20 @@ noteForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   // Получаем данные заметки
+  const noteTitle = document.getElementById('noteTitle').value;
   const noteContent = document.getElementById('noteContent').value;
   const noteCategory = categorySelect.value;
   const timestamp = new Date().toLocaleString();
 
-  if (noteContent) {
-    const note = { content: noteContent, category: noteCategory, timestamp };
+  if (noteTitle && noteContent) {
+    const note = { title: noteTitle, content: noteContent, category: noteCategory, timestamp };
     addNoteToList(note);
 
     // Сохраняем заметки
     saveNotes();
 
-    // Очищаем текстовое поле
+    // Очищаем текстовые поля
+    document.getElementById('noteTitle').value = '';
     document.getElementById('noteContent').value = '';
   }
 });

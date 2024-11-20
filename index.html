@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мои заметки</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 20px;
+      font-family: Arial, sans-serif;
+    }
+    textarea {
+      resize: none;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+    span {
+      font-weight: bold;
+    }
+
+    /* Анимация появления */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Анимация удаления */
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Применение анимаций */
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .fade-out {
+      animation: fadeOut 0.5s ease-in;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center text-primary my-4">Мои заметки</h1>
+
+    <!-- Форма добавления заметки -->
+    <form id="noteForm" class="mb-3">
+      <textarea id="noteContent" class="form-control mb-2" placeholder="Введите заметку"></textarea>
+      <select id="categorySelect" class="form-select mb-2">
+        <option value="Общие">Общие</option>
+        <option value="Работа">Работа</option>
+        <option value="Личное">Личное</option>
+        <option value="Учёба">Учёба</option>
+      </select>
+      <button type="submit" class="btn btn-primary w-100">Добавить заметку</button>
+    </form>
+
+    <!-- Поиск -->
+    <input id="searchInput" type="text" class="form-control mb-3" placeholder="Поиск по заметкам">
+
+    <!-- Список заметок -->
+    <ul id="notesList" class="list-unstyled"></ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
